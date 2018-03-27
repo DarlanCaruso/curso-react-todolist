@@ -1,0 +1,17 @@
+.todoBox {
+  margin: 35px;
+  margin-bottom: 0;
+  padding: 5px;
+  border: 1px solid #eee;
+  border-radius: 5px;
+}
+
+.column {
+  padding: 0 !important;
+}
+
+@media only screen and (min-width: 768px) {
+  .todoBox {
+    margin: 25px;
+  }
+}
