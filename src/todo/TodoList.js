@@ -10,7 +10,7 @@ export default props => {
       <article className="message is-dark" key={todo.id}>
         <div className="message-header">
           <p>{moment(todo.createdAt).locale('pt-br').fromNow()}</p>
-          <button className="delete" aria-label="delete"></button>
+          <button className="delete" aria-label="delete" onClick={() => props.removerTarefa(todo)}></button>
         </div>
         <div className="message-body has-text-left">
           {todo.descricao}

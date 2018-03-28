@@ -13,6 +13,7 @@ export default class Todo extends Component {
     this.state = { descricao: '', lista: [] };
     this.atualizaDescricao = this.atualizaDescricao.bind(this);
     this.adicionarTarefa = this.adicionarTarefa.bind(this);
+    this.removerTarefa = this.removerTarefa.bind(this);
     this.refresh();
   }
 
@@ -31,6 +32,11 @@ export default class Todo extends Component {
       .then(response => this.refresh());
   }
 
+  removerTarefa(todo) {
+    axios.delete(`${URL}/${todo.id}`)
+      .then(response => this.refresh());
+  }
+
   render() {
     return (
       <div className="todo">
@@ -41,7 +47,10 @@ export default class Todo extends Component {
               atualizaDescricao={this.atualizaDescricao}
               descricao={this.state.descricao}
             />
-            <TodoList list={this.state.list} />
+            <TodoList 
+              list={this.state.list}
+              removerTarefa={this.removerTarefa} 
+            />
         </div>
       </div>
     );
