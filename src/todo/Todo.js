@@ -14,6 +14,8 @@ export default class Todo extends Component {
     this.atualizaDescricao = this.atualizaDescricao.bind(this);
     this.adicionarTarefa = this.adicionarTarefa.bind(this);
     this.removerTarefa = this.removerTarefa.bind(this);
+    this.marcarComoConcluida = this.marcarComoConcluida.bind(this);
+    this.marcarComoPendente = this.marcarComoPendente.bind(this);
     this.refresh();
   }
 
@@ -28,13 +30,23 @@ export default class Todo extends Component {
 
   adicionarTarefa() {
     let descricao = this.state.descricao;
-    axios.post(URL, {descricao})
+    axios.post(URL, {descricao, done: false})
       .then(response => this.refresh());
   }
 
   removerTarefa(todo) {
     axios.delete(`${URL}/${todo.id}`)
       .then(response => this.refresh());
+  }
+
+  marcarComoConcluida(todo) {
+    axios.put(`${URL}/${todo.id}`, {...todo, done: 'true' })
+    .then(response => this.refresh())
+  }
+
+  marcarComoPendente(todo) {
+    axios.put(`${URL}/${todo.id}`, {...todo, done: 'false' })
+      .then(response => this.refresh())
   }
 
   render() {
@@ -49,7 +61,9 @@ export default class Todo extends Component {
             />
             <TodoList 
               list={this.state.list}
-              removerTarefa={this.removerTarefa} 
+              removerTarefa={this.removerTarefa}
+              marcarComoConcluida={this.marcarComoConcluida} 
+              marcarComoPendente={this.marcarComoPendente}
             />
         </div>
       </div>
