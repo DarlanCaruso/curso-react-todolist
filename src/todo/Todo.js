@@ -12,6 +12,7 @@ export default class Todo extends Component {
     super(props);
     this.state = { descricao: '', lista: [] };
     this.atualizaDescricao = this.atualizaDescricao.bind(this);
+    this.pesquisarTarefa = this.pesquisarTarefa.bind(this);
     this.adicionarTarefa = this.adicionarTarefa.bind(this);
     this.removerTarefa = this.removerTarefa.bind(this);
     this.marcarComoConcluida = this.marcarComoConcluida.bind(this);
@@ -23,30 +24,35 @@ export default class Todo extends Component {
     this.setState({...this.state, descricao: e.target.value});
   }
 
-  refresh() {
-    axios.get(`${URL}?sort=createdAt`)
-      .then(response => this.setState({...this.state, descricao: '', list: response.data}));
+  refresh(descricao = '') {
+    const search = descricao ? `/descricao/${descricao}` : '';
+    axios.get(`${URL}${search}?sort=-createdAt`)
+      .then(response => this.setState({...this.state, descricao, list: response.data}));
   }
 
   adicionarTarefa() {
-    let descricao = this.state.descricao;
+    const descricao = this.state.descricao;
     axios.post(URL, {descricao, done: false})
       .then(response => this.refresh());
   }
 
   removerTarefa(todo) {
     axios.delete(`${URL}/${todo.id}`)
-      .then(response => this.refresh());
+      .then(response => this.refresh(this.state.descricao));
   }
 
   marcarComoConcluida(todo) {
-    axios.put(`${URL}/${todo.id}`, {...todo, done: 'true' })
-    .then(response => this.refresh())
+    axios.put(`${URL}/${todo.id}`, {...todo, done: true })
+      .then(response => this.refresh(this.state.descricao))
   }
 
   marcarComoPendente(todo) {
-    axios.put(`${URL}/${todo.id}`, {...todo, done: 'false' })
-      .then(response => this.refresh())
+    axios.put(`${URL}/${todo.id}`, {...todo, done: false })
+      .then(response => this.refresh(this.state.descricao))
+  }
+
+  pesquisarTarefa() {
+    this.refresh(this.state.descricao);
   }
 
   render() {
@@ -58,6 +64,7 @@ export default class Todo extends Component {
               adicionarTarefa={this.adicionarTarefa}
               atualizaDescricao={this.atualizaDescricao}
               descricao={this.state.descricao}
+              pesquisarTarefa={this.pesquisarTarefa}
             />
             <TodoList 
               list={this.state.list}

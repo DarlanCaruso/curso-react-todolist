@@ -4,9 +4,9 @@ import If from '../helpers/If';
 export default props => (
   <If test={!props.hide}>
     <div className="control" onClick={props.onClick}>
-      <a className="button is-info">
+      <a className={props.color}>
         <span className="icon">
-          <i className="fas fa-plus"></i>
+          <i className={props.fa}></i>
         </span>
       </a>
     </div>
