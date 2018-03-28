@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import Todo from '../todo/Todo';
 import About from '../about/About';
@@ -7,8 +7,12 @@ import About from '../about/About';
 export default props => (
   <Router>
     <div>
-      <Route path="/about" component={About} />
-      <Route path="/todo" component={Todo} />
+    <Switch>
+      <Route exact path='/' component={Todo} />
+      <Route exact path='/todo' component={Todo} />
+      <Route exact path='/about' component={About} />
+      <Route component={Todo} />
+    </Switch>
     </div>
   </Router>
 );

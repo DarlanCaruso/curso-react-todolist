@@ -68,7 +68,7 @@ export default class Todo extends Component {
         <div className="container is-fluid">
           <Message 
             mensagem={['Você pode adiconar e pequisar suas lista de tarefas abaixo. Também é possível pesquisar usando atalhos do teclado. ', <strong>Enter</strong>, ' insere uma nova tarefa, ', <strong>Shift+Enter</strong>, ' pesquisa por uma tarefa e a tecla ', <strong>Esc</strong>, ' limpa sua pesquisa.']}
-            color="primary"
+            color="info"
             tamanho="small"
           />
           <TodoForm 
