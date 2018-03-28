@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 
 import Header from '../template/Header';
+import Message from '../template/Message';
 import TodoForm from './TodoForm';
 import TodoList from './TodoList';
 
@@ -17,6 +18,7 @@ export default class Todo extends Component {
     this.removerTarefa = this.removerTarefa.bind(this);
     this.marcarComoConcluida = this.marcarComoConcluida.bind(this);
     this.marcarComoPendente = this.marcarComoPendente.bind(this);
+    this.limparPesquisa = this.limparPesquisa.bind(this);
     this.refresh();
   }
 
@@ -55,23 +57,33 @@ export default class Todo extends Component {
     this.refresh(this.state.descricao);
   }
 
+  limparPesquisa() {
+    this.refresh();
+  }
+
   render() {
     return (
       <div className="todo">
         <Header titulo="Todo" subtitulo="Lista de tarefas" />
         <div className="container is-fluid">
-            <TodoForm 
-              adicionarTarefa={this.adicionarTarefa}
-              atualizaDescricao={this.atualizaDescricao}
-              descricao={this.state.descricao}
-              pesquisarTarefa={this.pesquisarTarefa}
-            />
-            <TodoList 
-              list={this.state.list}
-              removerTarefa={this.removerTarefa}
-              marcarComoConcluida={this.marcarComoConcluida} 
-              marcarComoPendente={this.marcarComoPendente}
-            />
+          <Message 
+            mensagem={['Você pode adiconar e pequisar suas lista de tarefas abaixo. Também é possível pesquisar usando atalhos do teclado. ', <strong>Enter</strong>, ' insere uma nova tarefa, ', <strong>Shift+Enter</strong>, ' pesquisa por uma tarefa e a tecla ', <strong>Esc</strong>, ' limpa sua pesquisa.']}
+            color="primary"
+            tamanho="small"
+          />
+          <TodoForm 
+            adicionarTarefa={this.adicionarTarefa}
+            atualizaDescricao={this.atualizaDescricao}
+            descricao={this.state.descricao}
+            pesquisarTarefa={this.pesquisarTarefa}
+            limparPesquisa={this.limparPesquisa}
+          />
+          <TodoList 
+            list={this.state.list}
+            removerTarefa={this.removerTarefa}
+            marcarComoConcluida={this.marcarComoConcluida} 
+            marcarComoPendente={this.marcarComoPendente}
+          />
         </div>
       </div>
     );
