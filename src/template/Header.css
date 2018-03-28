@@ -1,0 +1,11 @@
+.hero-body {
+  background-blend-mode: luminosity;
+  background-size: cover;
+  background-position-y: 60%;
+  background-image: url('../bg.jpg');
+}
+
+.title {
+  text-transform: uppercase;
+  text-shadow: 2px 1px 0 #222;
+}

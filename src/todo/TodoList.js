@@ -11,24 +11,25 @@ export default props => {
         <div className="message-header">
           <p>{moment(todo.createdAt).locale('pt-br').fromNow()} - Status: <strong>{todo.done === false ? 'Pendente' : 'Concluído'}</strong></p>
           <div className="buttons">
-            <span 
+            <button
               className="button is-outlined is-primary is-small" 
               onClick={() => props.marcarComoPendente(todo)}
               disabled={todo.done === false}>
               <i className="fas fa-hourglass-end"></i> 
-            </span>
-            <span 
+            </button>
+            <button 
               className="button is-outlined is-info is-small" 
               onClick={() => props.marcarComoConcluida(todo)} 
               disabled={todo.done === true}>
               <i className="far fa-check-circle"></i>
-            </span>
-            <span 
+            </button>
+            <button 
               className="button is-outlined is-danger is-small" 
               onClick={() => props.removerTarefa(todo)}
-              disabled={todo.done === false}>
+              disabled={todo.done === false}
+              readonly={!todo.done === 'readonly'}>
               <i className="fas fa-times"></i>
-            </span>
+            </button>
           </div>
         </div>
         <div className="message-body has-text-left">
