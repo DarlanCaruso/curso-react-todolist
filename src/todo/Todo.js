@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 
 import Header from '../template/Header';
 import TodoForm from './TodoForm';
 import TodoList from './TodoList';
+
+const URL = 'http://localhost:9000/tarefas/';
 
 export default class Todo extends Component {
   constructor(props) {
@@ -10,14 +13,22 @@ export default class Todo extends Component {
     this.state = { descricao: '', lista: [] };
     this.atualizaDescricao = this.atualizaDescricao.bind(this);
     this.adicionarTarefa = this.adicionarTarefa.bind(this);
+    this.refresh();
   }
 
   atualizaDescricao(e) {
     this.setState({...this.state, descricao: e.target.value});
   }
 
+  refresh() {
+    axios.get(`${URL}?sort=createdAt`)
+      .then(response => this.setState({...this.state, descricao: '', list: response.data}));
+  }
+
   adicionarTarefa() {
-    console.log(this.state.descricao);
+    let descricao = this.state.descricao;
+    axios.post(URL, {descricao})
+      .then(response => this.refresh());
   }
 
   render() {
@@ -30,7 +41,7 @@ export default class Todo extends Component {
               atualizaDescricao={this.atualizaDescricao}
               descricao={this.state.descricao}
             />
-            <TodoList />
+            <TodoList list={this.state.list} />
         </div>
       </div>
     );
